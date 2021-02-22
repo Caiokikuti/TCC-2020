@@ -30,7 +30,7 @@ plt.style.use('fivethirtyeight')
 
 SEQ_LEN = 30
 FUTURE_PERIOD_PREDICT = 1
-EPOCHS = 3
+EPOCHS = 100
 BATCH_SIZE = 128
 NAME = f"{SEQ_LEN}-SEQ-{FUTURE_PERIOD_PREDICT}-PRED-{int(time.time())}"
 
@@ -141,7 +141,7 @@ model.add(Dropout(0.2))
 model.add(Dense(2, activation="softmax"))
 
 opt = tf.keras.optimizers.Adam(lr=0.001, decay=1e-6)
-model.compile(loss='sparse_categorical_crossentropy', optimizer=opt, metrics=['accuracy', "binary_accuracy"])
+model.compile(loss='sparse_categorical_crossentropy', optimizer=opt, metrics=['accuracy', 'mean_squared_error'])
 
 #Saving information for the tensorboard
 tensorboard = TensorBoard(log_dir="logs/{}".format(NAME))
@@ -161,6 +161,7 @@ history = model.fit(
 score = model.evaluate(validation_x, validation_y, verbose=0)
 print('Test loss:', score[0])
 print('Test accuracy:', score[1])
+print('mean squared error', score[2])
 
 # Save model
 model.save("models/{}".format(NAME))
@@ -209,6 +210,8 @@ prediction = model.predict(setx)
 classes = np.argmax(prediction, axis = 1)
 print(classes.shape)
 print(f'F1-Score: {metrics.f1_score(classes,sety)}')
+resultados = metrics.classification_report(classes, sety)
+print(resultados)
 
 df3 = web.DataReader('BTC-USD', data_source='yahoo', start='2020-01-01', end='2020-12-31')
 df3['future'] = df3['Close'].shift(-FUTURE_PERIOD_PREDICT)

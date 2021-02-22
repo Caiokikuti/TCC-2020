@@ -10,11 +10,13 @@ def printCarteira(carteira):
     print("dinheiro movimentado em compras: ", carteira.montanteDeCompra)
     print("dinheiro movimentado em vendas: ", carteira.montanteDeVenda)
     print("Lucro arrecadoado no mes: ", carteira.lucroMensal)
+    print("Quantidade de compra por mes: ", carteira.contaCompraMes)
+    print("Quantidade de compra por mes: ", carteira.contaVendaMes)
     print("Quantidade total comprada: ", carteira.quantidadeTotalComprada)
 
 def main():
     portifolio = carteira.Carteira(100000)
-    simulador.simulador(portifolio, 'OUTPUT_LSTM_reshape')
+    simulador.simulador(portifolio, 'OUTPUT_LSTM_reshape2')
     printCarteira(portifolio)
 
 
