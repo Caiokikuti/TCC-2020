@@ -1,5 +1,9 @@
+import pandas_datareader as web
 import carteira
 import simulador
+import techniacalAnalisys
+import hibrido
+
 def printCarteira(carteira):
     print("quantidade de bitcoin: ", carteira.quantidadeDeBitcoin)
     print("valor inicial: ", carteira.valorInicial)
@@ -11,12 +15,31 @@ def printCarteira(carteira):
     print("dinheiro movimentado em vendas: ", carteira.montanteDeVenda)
     print("Lucro arrecadoado no mes: ", carteira.lucroMensal)
     print("Quantidade de compra por mes: ", carteira.contaCompraMes)
-    print("Quantidade de compra por mes: ", carteira.contaVendaMes)
+    print("Quantidade de venda por mes: ", carteira.contaVendaMes)
     print("Quantidade total comprada: ", carteira.quantidadeTotalComprada)
 
 def main():
+
+    portifolioTA = carteira.Carteira(100000) 
     portifolio = carteira.Carteira(100000)
-    simulador.simulador(portifolio, 'OUTPUT_LSTM_reshape2')
+    portifolioHibrido = carteira.Carteira(100000)
+    
+    # teste do hibrido
+    hibrido.simulador(portifolioHibrido, 'OUTPUT_LSTM_reshape2.csv')
+    print("======================Hibrido=====================\n\n")
+    print("Carteira HIBRIDA\n")
+    printCarteira(portifolioHibrido)
+
+    # teste da TA
+    techniacalAnalisys.simulador(portifolioTA, 'OUTPUT_LSTM_reshape2.csv')
+    print("======================TA=====================\n\n")
+    print("Carteira TA\n")
+    printCarteira(portifolioTA)
+
+    # teste da LSTM
+    simulador.simulador(portifolio, 'OUTPUT_LSTM_reshape2.csv')
+    print("======================LSTM=====================\n\n")
+    print("Carteira LSTM\n")
     printCarteira(portifolio)
 
 

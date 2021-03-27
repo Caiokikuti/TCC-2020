@@ -13,12 +13,16 @@ def simulador(carteira, dataName):
 
 
     for i in range (1, len(inputData)+1):
+
         if i == 362:
             mesCorrente = inputData.values[i-1][0][5:7]
             fechamento = float(inputData.values[i-1][4])
+            decisaoDoDia = inputData.values[i-1][9]
         else:
             mesCorrente = inputData.values[i][0][5:7]
             fechamento = float(inputData.values[i][4])
+            decisaoDoDia = inputData.values[i][9]
+        
 
         rsi = ta.momentum.RSIIndicator(close=inputData['Close'], n=9, fillna=False)
         inputData['rsi'] = rsi.rsi()
@@ -39,14 +43,14 @@ def simulador(carteira, dataName):
                     lucroMensal[mesCorrente] = carteira.quantidadeDeBitcoin*fechamento
                 carteira.vender(fechamento, mesCorrente)
         else:
-            if((inputData['stochastic'][i-1]) <= 20 and (inputData['rsi'][i-1] <= 30)):  
+            if(decisaoDoDia == 1):  
                 if(carteira.podeComprar(fechamento)):
                     if(mesCorrente in lucroMensal):
                         lucroMensal[mesCorrente] -= carteira.valorDisponivel
                     else:
                         lucroMensal[mesCorrente] = -1*(carteira.valorDisponivel)
                     carteira.comprar(fechamento, mesCorrente)
-            elif((inputData['MACD_diff'][i-1] < 0) and (inputData['rsi'][i-1] >= 70) and (inputData['stochastic'][i-1] >= 80)):   
+            elif((inputData['stochastic'][i-1] >= 80) and (decisaoDoDia == 0) and (inputData['rsi'][i-1] >= 70) and (inputData['MACD_diff'][i-1] <= 0)):   
                 if(carteira.verificaVenda()):
                     if(mesCorrente in lucroMensal):
                         lucroMensal[mesCorrente] += carteira.quantidadeDeBitcoin*fechamento

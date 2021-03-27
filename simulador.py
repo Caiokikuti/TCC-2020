@@ -9,10 +9,10 @@ def simulador(carteira, dataName):
         mesCorrente = inputData.values[i][0][5:7]
         decisaoDoDia = inputData.values[i][9]
         fechamento = float(inputData.values[i][4])
-        if(i == 362):
+        if(i == 361):
             if(carteira.verificaVenda()):
-                carteira.vender(fechamento, mesCorrente)
                 lucroMensal[mesCorrente] += carteira.quantidadeDeBitcoin*fechamento             
+                carteira.vender(fechamento, mesCorrente)
                 print("venda ultimo dia: ", carteira.quantidadeDeBitcoin*fechamento)
         else:
             if(decisaoDoDia == 1):  
