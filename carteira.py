@@ -1,7 +1,7 @@
 class Carteira:
     def __init__(self, valorInicial):
         self.valorInicial = valorInicial
-        self.valorDisponivel = valorInicial
+        self.valorDisponivel = 100000
         self.quantidadeDeBitcoin = 0
         self.quantidadeTotalComprada = 0
         self.numeroDeCompras = 0

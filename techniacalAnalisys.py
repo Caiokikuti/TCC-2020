@@ -54,3 +54,4 @@ def simulador(carteira, dataName):
                         lucroMensal[mesCorrente] = carteira.quantidadeDeBitcoin*fechamento
                     carteira.vender(fechamento, mesCorrente)
     carteira.lucroMensal = lucroMensal
+    inputData['stochastic'].to_csv("./TA-table")
